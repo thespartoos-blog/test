@@ -1,0 +1,22 @@
+I"
+<ul>
+  <li><a href="#este-artículo-engloba-una-enorme-y-extensa-guía-de-ataques-que-se-pueden-realizar-en-un-entorno-de-directorio-activo"><strong>Este artículo engloba una enorme y extensa guía de ataques que se pueden realizar en un entorno de Directorio Activo</strong></a></li>
+  <li><a href="#enumerar-usuarios-del-sistema">Enumerar usuarios del sistema</a>
+    <ul>
+      <li><a href="#smbclient-y-smbmap">SMBCLIENT Y SMBMAP</a></li>
+      <li><a href="#rpcclient">RPCCLIENT</a></li>
+      <li><a href="#ldapdomaindump">LDAPDOMAINDUMP</a></li>
+    </ul>
+  </li>
+  <li><a href="#ataques-directorio-activo">ATAQUES DIRECTORIO ACTIVO</a>
+    <ul>
+      <li><a href="#smb-relay">SMB RELAY</a></li>
+      <li><a href="#kerberoasting">KERBEROASTING</a></li>
+      <li><a href="#asreproast">ASREPROAST</a></li>
+      <li><a href="#goldenticket-attack">GOLDENTICKET ATTACK</a></li>
+    </ul>
+  </li>
+  <li><a href="#bloodhound">BLOODHOUND</a></li>
+  <li><a href="#maneras-acceder-equipos">MANERAS ACCEDER EQUIPOS</a></li>
+</ul>
+:ET

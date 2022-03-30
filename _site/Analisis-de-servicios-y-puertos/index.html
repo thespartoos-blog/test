@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link rel="icon" href="/assets/images/logo.png">
+
+<title>Host and Port Discovery | thespartoos</title>
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Host and Port Discovery | Alejandro Ruiz</title>
+<meta name="generator" content="Jekyll v4.2.1" />
+<meta property="og:title" content="Host and Port Discovery" />
+<meta name="author" content="thespartoos" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="BIENVENIDOS A MI PRIMER POST Aquí puedes aprender como enumerar puertos y como descubrir hosts activos en red utilizando una serie de utilidades, algunas diseñadas y otras son creadas manualmente por ti" />
+<meta property="og:description" content="BIENVENIDOS A MI PRIMER POST Aquí puedes aprender como enumerar puertos y como descubrir hosts activos en red utilizando una serie de utilidades, algunas diseñadas y otras son creadas manualmente por ti" />
+<link rel="canonical" href="http://localhost:4000/Analisis-de-servicios-y-puertos/" />
+<meta property="og:url" content="http://localhost:4000/Analisis-de-servicios-y-puertos/" />
+<meta property="og:site_name" content="Alejandro Ruiz" />
+<meta property="og:image" content="http://localhost:4000/assets/images/Analisis-de-servicios-y-puertos/nmap.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-08-16T00:00:00+02:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="http://localhost:4000/assets/images/Analisis-de-servicios-y-puertos/nmap.jpg" />
+<meta property="twitter:title" content="Host and Port Discovery" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"thespartoos"},"dateModified":"2021-08-16T00:00:00+02:00","datePublished":"2021-08-16T00:00:00+02:00","description":"BIENVENIDOS A MI PRIMER POST Aquí puedes aprender como enumerar puertos y como descubrir hosts activos en red utilizando una serie de utilidades, algunas diseñadas y otras son creadas manualmente por ti","headline":"Host and Port Discovery","image":"http://localhost:4000/assets/images/Analisis-de-servicios-y-puertos/nmap.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/Analisis-de-servicios-y-puertos/"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/images/thespartoos.png"},"name":"thespartoos"},"url":"http://localhost:4000/Analisis-de-servicios-y-puertos/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    
+<link href="/assets/css/prism.css" rel="stylesheet">
+
+<link href="/assets/css/theme.css" rel="stylesheet">
+
+<script src="/assets/js/jquery.min.js"></script>
+
+</head>
+
+
+
+
+<body>
+	<!-- defer loading of font and font awesome -->
+	<noscript id="deferred-styles">
+		<link href="https://fonts.googleapis.com/css?family=Sen:400,700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+	</noscript>
+
+<!-- Begin Sidebar Navigation
+================================================== -->
+
+<div class="sidebar">    
+</div>   
+<div class="nav-icon">
+    <div class="hamburger-bar"></div>
+</div>
+<div id="blackover-nav" class="blackover"></div>
+<nav id="menu">
+    <ul>
+        <h3>Menú</h3>
+        <li><a href="/">Home</a></li>
+        <li><a href="/categories">Artículos   <span class="badge badge-primary">nuevo</span></a></li>
+	<li><a href="/tags">Etiquetas</a></li>
+	<li><a href="/about">Sobre mi</a></li>
+    </ul>   
+</nav>
+
+<!-- Share
+===================== -->
+
+<div class="share">
+    <ul>
+        <li class="ml-1 mr-1">
+            <a target="_blank" href="https://twitter.com/thespartoos" style="color: #00aef3;">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </li>
+
+        <li class="ml-1 mr-1">
+            <a target="_blank" href="https://github.com/thespartoos" style="color: white;">
+                <i class="fab fa-github"></i>
+            </a>
+        </li>
+
+        <li class="ml-1 mr-1">
+            <a target="_blank" href="https://www.hackthebox.com/home/users/profile/435714">
+                <script src="https://code.iconify.design/2/2.2.0/iconify.min.js"></script>
+                <span class="iconify" data-icon="simple-icons:hackthebox" style="color: #2bff2b;"></span>
+            </a>
+        </li>
+
+    </ul>
+</div>
+
+<script src="/assets/js/lunr.js"></script>
+
+<style>
+    
+</style>
+
+<div class="wrap-search">
+    <div class="d-flex align-items-center ml-auto">
+        <i class="fas fa-search show-search"></i>
+        <form class="bd-search ml-3" onSubmit="return lunr_search(document.getElementById('lunrsearch').value);">
+            <input type="text" class="form-control bigradius text-small launch-modal-search" id="lunrsearch" name="q" maxlength="255" value="" placeholder="Type and enter..."/>
+        </form>
+    </div>
+</div>
+
+<div id="lunrsearchresults">
+    <ul></ul>
+</div>
+
+<script src="/assets/js/lunrsearchengine.js"></script>
+
+
+<!-- End Sidebar Navigation
+================================================== -->
+
+<div class="site-content ">
+
+<div class="container">
+
+    <!-- Site Logo/Name
+    ================================================== -->
+   
+    <a class="navbar-brand" href="/">
+        <img src="/assets/images/thespartoos.png" alt="thespartoos">
+    </a>  
+   
+
+    <!-- Site Tag
+    ================================================== -->
+    
+
+    <!-- Content
+    ================================================== -->
+    <div class="main-content">
+        <div class="entry-header">
+    <!-- Post Title -->
+    <h1 class="posttitle">Host and Port Discovery</h1>
+    <!-- Author & Date  Box -->
+    
+    
+    <div class="d-flex align-items-center mt-4">
+        <div>
+            
+            <img class="author-thumb" src="/assets/images/thespartoos.png" alt="Thespartoos">
+            
+        </div>            
+        <div>
+        Written by Thespartoos on 
+        <span class="post-date"><time class="post-date" datetime="2021-08-16">16 Aug 2021</time></span>           
+        
+        </div>            
+    </div>
+    
+</div>
+
+<!-- Adsense under title if enabled from _config.yml (change your pub id and slot) -->
+
+
+<!-- Featured Image -->
+
+<div class="entry-featured-image">
+    
+    <img class="featured-image " src="/assets/images/Analisis-de-servicios-y-puertos/nmap.jpg" alt="Host and Port Discovery">
+    
+</div>
+
+
+<!-- Content -->
+<!-- Post, Page Content
+================================================== -->
+<div class="article-post">
+    <!-- Toc if any -->
+    
+    <!-- End Toc -->
+    <h2 id="bienvenidos-a-mi-primer-post"><strong>BIENVENIDOS A MI PRIMER POST</strong></h2>
+<p><br />
+Aquí puedes aprender como enumerar puertos y como descubrir hosts activos en 
+red utilizando una serie de utilidades, algunas diseñadas y otras son creadas 
+manualmente por ti</p>
+
+<ul>
+  <li>1 - PUERTOS</li>
+  <li>2 - HOSTS</li>
+</ul>
+
+<h2 id="1---portscan-manual">1 - PORTSCAN MANUAL</h2>
+
+<pre><code class="language-bash">#!/bin/bash
+
+function ctrl_c(){
+	echo -e "\n\n[!] Saliendo....\n"
+	tput cnorm; exit 1
+}
+
+# Ctrl+C
+
+trap ctrl_c INT
+tput civis
+
+for port in $(seq 1 65535); do
+	timeout 1 bash -c "echo '' &gt; /dev/tcp/IP/$port" 2&gt;/dev/null &amp;&amp; echo "[+] Puerto $port - ABIERTO" &amp;
+done; wait
+tput cnorm
+</code></pre>
+
+<h2 id="1---puertos-nmap">1 - Puertos NMAP</h2>
+
+<ul>
+  <li>Modo –&gt; agresivo y ruidoso ⚠️  <code>nmap -p- --open -T5 -v -n [IP]</code></li>
+  <li>Modo –&gt; Rápido enviando 5000 p/s 💨 <code>nmap -sS --min-rate 5000 -p- --open -vvv -n -Pn [IP]</code></li>
+  <li>Modo –&gt; Enumerar servicio y versión 🔥 <code>nmap -sC -sV -p22,80,443 [IP]</code></li>
+</ul>
+
+<h2 id="2---host-discovery">2 - HOST DISCOVERY</h2>
+
+<pre><code class="language-javascript">#!/bin/bash
+
+function ctrl_c(){
+	echo -e "\n\n[!] Saliendo....\n"
+	tput cnorm; exit 1
+}
+
+# Ctrl+C
+trap ctrl_c INT
+
+tput civis
+for host in $(seq 1 254); do
+	timeout 5 bash -c "ping -c 1 192.168.1.$host &amp;&gt;/dev/null " &amp;&amp; echo "[+] HOST 192.168.1.$host - ACTIVO" &amp;
+done; wait
+tput cnorm
+</code></pre>
+<h2 id="2---host-nmap">2 - HOST NMAP</h2>
+
+<pre><code class="language-bash">nmap -sP 192.168.1.0/24
+</code></pre>
+<pre><code class="language-bash">nmap -sn 192.168.1.0/24
+</code></pre>
+
+</div>
+
+<!-- Rating -->
+
+
+<!-- Author Box if enabled from _config.yml -->
+<!-- Author Box -->
+
+
+<div class="authorbox mb-5 mt-5 pt-4 pb-4">   
+    <div class="row">
+        <div class="wrapavname col-md-3 text-center">
+            
+            <img  class="author-thumb" src="/assets/images/thespartoos.png" alt="Thespartoos">
+            
+            <p class="mt-4 mb-0 small text-center">
+                <a target="_blank" class="d-inline-block mx-1 text-dark" href="https://thespartoos.github.io"><i class="fa fa-link"></i></a> 
+                <a target="_blank" class="d-inline-block mx-1 text-dark" href="https://twitter.com/thespartoos"><i class="fab fa-twitter"></i></a>
+                <a class="d-inline-block mx-1 text-dark" href="mailto:"><i class="fa fa-envelope"></i></a>
+            </p>
+        </div>
+        <div class="col-md-9">
+            <h4>Thespartoos</h4>
+            <p class="mt-3 mb-0">Creador del Blog de Ciberseguridad</p>
+        </div>
+    </div> 
+</div> 
+
+
+
+<!-- Comments if not disabled with comments: false -->
+<!-- Comments
+================================================== -->
+ 
+<div class="comments mt-5">
+    <div id="comments">  
+        <h4 class="mb-4">Comments</h4>                 
+            <section class="disqus">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'demowebsite'; 
+        var disqus_developer = 0;
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = window.location.protocol + '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+     
+    <div class="clearfix"></div>              
+    </div>    
+</div>       
+
+
+
+<!-- Share -->
+<div class="share">
+    <ul>
+        <li class="ml-1 mr-1">
+            <a target="_blank" href="https://twitter.com/thespartoos" style="color: #00aef3;">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </li>
+
+        <li class="ml-1 mr-1">
+            <a target="_blank" href="https://github.com/thespartoos" style="color: white;">
+                <i class="fab fa-github"></i>
+            </a>
+        </li>
+
+        <li class="ml-1 mr-1">
+            <a target="_blank" href="https://www.hackthebox.com/home/users/profile/435714">
+		<script src="https://code.iconify.design/2/2.2.0/iconify.min.js"></script>
+		<span class="iconify" data-icon="simple-icons:hackthebox" style="color: #2bff2b;"></span>
+            </a>
+        </li>
+
+    </ul>
+</div>
+
+
+<!-- Related Post -->
+<!-- Related Posts
+================================================== -->
+<div class=" related-posts ">  
+
+    
+    <h2 class="text-center mb-4">Explore more like this</h2>
+    
+    
+    <div class="d-flex justify-content-center align-items-center">
+    
+    <!-- Categories -->
+    
+    
+    <a class="smoothscroll badge badge-primary text-capitalize" href="/categories#Articulo">Articulo</a>                
+    
+
+    <!-- Tags -->  
+    
+    
+
+    </div>
+
+    
+    
+    
+    <div class="blog-grid-container">
+        
+        
+            
+            
+        
+            
+        
+            
+            <!-- begin post -->
+
+
+<div class="blog-grid-item">
+    <div class="card h-100">
+        <div class="maxthumb">
+            <a href="/Pentesting-Active-Directory/">
+                
+
+                    
+                        <img class="img-thumb" src="https://hlassets.paessler.com/common/files/graphics/monitoring-topics/active-directory-monitoring.png" alt="Pentesting Active Directory"> 
+                    
+
+                
+            </a>
+        </div>
+        <div class="card-body">
+            <h2 class="card-title">
+                <a class="text-dark" href="/Pentesting-Active-Directory/">Pentesting Active Directory</a>
+                
+            </h2>
+            <h4 class="card-text">Este artículo engloba una enorme y extensa guía de ataques que se pueden realizar en un entorno de Directorio Activo Para practicar todo este tipo de ataques te recomiendo que...</h4>
+        </div>
+        <div class="card-footer bg-white">
+            <div class="wrapfooter">
+                
+                <span class="meta-footer-thumb">
+                
+                <img class="author-thumb" src="/assets/images/thespartoos.png" alt="Thespartoos">
+                
+                </span>
+                <span class="author-meta">
+                <span class="post-name font-weight-bold">Thespartoos</span> 
+                
+                <span class="post-date">28 Mar 2022</span>
+                </span>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end post -->
+            
+            
+            
+        
+        
+        
+            
+            
+        
+            
+        
+            
+            <!-- begin post -->
+
+
+<div class="blog-grid-item">
+    <div class="card h-100">
+        <div class="maxthumb">
+            <a href="/Ver-Canales-de-pago/">
+                
+
+                    
+                        <img class="img-thumb" src="/assets/images/Parabolica/parabolica-imagen.png" alt="Ver canales de pago (GRATIS)"> 
+                    
+
+                
+            </a>
+        </div>
+        <div class="card-body">
+            <h2 class="card-title">
+                <a class="text-dark" href="/Ver-Canales-de-pago/">Ver canales de pago (GRATIS)</a>
+                
+            </h2>
+            <h4 class="card-text">¿Como puedo ver canales de pago gratis? Antes de comenzar con el procedimiento de como realizar los pasos vamos a comenzar con la explicación lógica que nos va a servir...</h4>
+        </div>
+        <div class="card-footer bg-white">
+            <div class="wrapfooter">
+                
+                <span class="meta-footer-thumb">
+                
+                <img class="author-thumb" src="/assets/images/thespartoos.png" alt="Thespartoos">
+                
+                </span>
+                <span class="author-meta">
+                <span class="post-name font-weight-bold">Thespartoos</span> 
+                
+                <span class="post-date">20 Dec 2021</span>
+                </span>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end post -->
+            
+            
+            
+        
+        
+        
+            
+            
+        
+            
+        
+            
+        
+        
+        </div>        
+</div>
+
+<!-- Review with LD-JSON, adapt it for your needs if you like, but make sure you test the generated HTML source code first: 
+https://search.google.com/structured-data/testing-tool/u/0/
+================================================== -->
+
+    </div>
+
+    
+    <!-- Newsletter
+    ==================================================
+    <div class="newsletter text-center">
+        <span class="h4"><img src="/assets/images/thespartoos.png" class="newsletter-logo" alt="Alejandro Ruiz"> &nbsp; Never miss a <b>story</b> from us, subscribe to our newsletter</span>
+        <form action="https://wowthemes.us11.list-manage.com/subscribe/post?u=8aeb20a530e124561927d3bd8&amp;id=8c3d2d214b" method="post" name="mc-embedded-subscribe-form" class="wj-contact-form validate" target="_blank" novalidate>
+            <div class="mc-field-group d-inline-flex">
+            <input type="email" placeholder="Your e-mail" name="EMAIL" class="required email" id="mce-EMAIL" autocomplete="on" required>
+            <input type="submit" value="Subscribe" name="subscribe" class="heart">
+            </div>
+        </form>
+    </div> -->
+    
+    
+</div>
+
+<!-- Begin Footer
+================================================== -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-12 text-center text-lg-left">
+                Copyright © 2022 thespartoos 
+            </div>
+            <div class="col-md-6 col-sm-12 text-center text-lg-right">  
+                <!--<a target="_blank" href="https://www.wowthemes.net/memoirs-free-jekyll-theme/">Memoirs Jekyll Theme</a> by WowThemes.net -->
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- End Footer
+================================================== -->
+
+</div> <!-- /.site-content -->
+
+<!-- Scripts (if you need bootstrap.js, please add it yourself. I didn't use it for performance reasons, it was not needed in this theme)
+================================================== -->
+
+<script src="/assets/js/prism.js"></script>
+
+<script src="/assets/js/theme.js"></script>
+
+
+
+
+<script id="dsq-count-scr" src="//demowebsite.disqus.com/count.js"></script>
+
+
+</body>
+</html>

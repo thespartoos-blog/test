@@ -1,0 +1,64 @@
+I"�<h2 id="bienvenidos-a-mi-primer-post"><strong>BIENVENIDOS A MI PRIMER POST</strong></h2>
+<p><br />
+Aquí puedes aprender como enumerar puertos y como descubrir hosts activos en 
+red utilizando una serie de utilidades, algunas diseñadas y otras son creadas 
+manualmente por ti</p>
+
+<ul>
+  <li>1 - PUERTOS</li>
+  <li>2 - HOSTS</li>
+</ul>
+
+<h2 id="1---portscan-manual">1 - PORTSCAN MANUAL</h2>
+
+<pre><code class="language-bash">#!/bin/bash
+
+function ctrl_c(){
+	echo -e "\n\n[!] Saliendo....\n"
+	tput cnorm; exit 1
+}
+
+# Ctrl+C
+
+trap ctrl_c INT
+tput civis
+
+for port in $(seq 1 65535); do
+	timeout 1 bash -c "echo '' &gt; /dev/tcp/IP/$port" 2&gt;/dev/null &amp;&amp; echo "[+] Puerto $port - ABIERTO" &amp;
+done; wait
+tput cnorm
+</code></pre>
+
+<h2 id="1---puertos-nmap">1 - Puertos NMAP</h2>
+
+<ul>
+  <li>Modo –&gt; agresivo y ruidoso ⚠️  <code>nmap -p- --open -T5 -v -n [IP]</code></li>
+  <li>Modo –&gt; Rápido enviando 5000 p/s 💨 <code>nmap -sS --min-rate 5000 -p- --open -vvv -n -Pn [IP]</code></li>
+  <li>Modo –&gt; Enumerar servicio y versión 🔥 <code>nmap -sC -sV -p22,80,443 [IP]</code></li>
+</ul>
+
+<h2 id="2---host-discovery">2 - HOST DISCOVERY</h2>
+
+<pre><code class="language-javascript">#!/bin/bash
+
+function ctrl_c(){
+	echo -e "\n\n[!] Saliendo....\n"
+	tput cnorm; exit 1
+}
+
+# Ctrl+C
+trap ctrl_c INT
+
+tput civis
+for host in $(seq 1 254); do
+	timeout 5 bash -c "ping -c 1 192.168.1.$host &amp;&gt;/dev/null " &amp;&amp; echo "[+] HOST 192.168.1.$host - ACTIVO" &amp;
+done; wait
+tput cnorm
+</code></pre>
+<h2 id="2---host-nmap">2 - HOST NMAP</h2>
+
+<pre><code class="language-bash">nmap -sP 192.168.1.0/24
+</code></pre>
+<pre><code class="language-bash">nmap -sn 192.168.1.0/24
+</code></pre>
+:ET

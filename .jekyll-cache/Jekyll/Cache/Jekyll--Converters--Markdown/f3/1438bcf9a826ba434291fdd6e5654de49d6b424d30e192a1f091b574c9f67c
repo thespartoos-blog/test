@@ -1,0 +1,33 @@
+I"/<div class="list-authors mt-5">
+   
+    <div id="thespartoos" class="authorbox position-relative pb-5 pt-5 mb-4 mt-4 border">   
+        <div class="row">
+            <div class="wrapavname col-md-3 text-center">
+                
+                <img class="author-thumb" src="/assets/images/thespartoos.png" alt="" />
+                
+
+                <p class="mt-4 mb-0 small text-center">
+
+                    
+                        <a target="_blank" class="d-inline-block mx-1 text-dark" href="https://thespartoos.github.io"><i class="fa fa-link"></i></a> 
+                    
+
+                    
+                        <a target="_blank" class="d-inline-block mx-1 text-dark" href="https://twitter.com/thespartoos"><i class="fab fa-twitter"></i></a>
+                    
+
+                    
+
+                </p>
+                
+            </div>
+            <div class="col-md-9">
+                <h3>Thespartoos</h3>
+                <p class="mt-3 mb-0">Creador del Blog de Ciberseguridad</p> 
+            </div>
+        </div> 
+    </div>    
+
+</div>
+:ET
